@@ -512,16 +512,16 @@
         },
         {
             "name": "coolsam/modules",
-            "version": "v5.0.2",
+            "version": "v5.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/savannabits/filament-modules.git",
-                "reference": "4ce734bed1d2c2973b914aa4e244c8a88cf11956"
+                "reference": "6f98012c9838d7eac43c0c110285c97c2dbf87cb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/savannabits/filament-modules/zipball/4ce734bed1d2c2973b914aa4e244c8a88cf11956",
-                "reference": "4ce734bed1d2c2973b914aa4e244c8a88cf11956",
+                "url": "https://api.github.com/repos/savannabits/filament-modules/zipball/6f98012c9838d7eac43c0c110285c97c2dbf87cb",
+                "reference": "6f98012c9838d7eac43c0c110285c97c2dbf87cb",
                 "shasum": ""
             },
             "require": {
@@ -585,7 +585,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-08-31T19:38:12+00:00"
+            "time": "2025-09-03T10:04:03+00:00"
         },
         {
             "name": "danharrin/date-format-converter",
