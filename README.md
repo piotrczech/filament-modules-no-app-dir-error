@@ -80,3 +80,48 @@ This repository serves as:
 - The models are basic examples created with VibeCoding for demonstration
 - All paths and configurations are set to trigger the filament-modules failure
 - Use this repository to report issues or test potential fixes
+
+# Issue comment
+
+LINK: https://github.com/savannabits/filament-modules/issues/127
+
+Hi, the issue is still present, so I’m opening this. I’ve prepared a demo repository to reproduce the problem:
+`https://github.com/piotrczech/filament-modules-no-app-dir-error`
+
+### Setup
+A fresh Laravel project with the following installed:
+- laravel sail
+- laravel modules
+- changed `modules.paths.app_folder` to `/`
+- filament
+- filament-modules
+
+Using VibeCoding, I created two simple models inside the module to have some data for testing. Then I changed the setting `modules.paths.app_folder` to `/`.
+
+The module folder structure is simplified due to this configuration.
+
+### Errors
+
+1) `artisan module:filament:install`
+
+- The generated Filament configuration is created inside the `app` folder instead of the `/` module.
+- To attempt a fix, I moved the generated Filament folder to the root directory and then tried generating a resource.
+
+2) `artisan module:make:filament-resource`
+
+- The command fails with: The "/var/www/html/Modules/MyModule/app/Models" directory does not exist.
+- The plugin still searches in the `app` folder despite the configuration pointing to `/`.
+- Providing the model name explicitly (e.g., `artisan module:make:filament-resource Post`) generates files in the correct path, but the resource still doesn’t show up in the admin because discovery only looks in `app`.
+
+### Summary
+
+Expected behavior:
+1. Filament configuration should respect the `modules.paths.app_folder` setting.
+2. Resources should be generated and recognized correctly in the configured `modules.paths.app_folder`.
+
+Actual behavior:
+1. Configuration is always created in `app`.
+2. Resource generation fails unless the model is explicitly specified.
+3. Even generated resources are not detected if they are outside the `app` folder.
+
+This demo repository reproduces the problem reliably and should help avoid misunderstandings when discussing a fix.
