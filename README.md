@@ -1,61 +1,82 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# filament modules issue demo
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+This repository demonstrates a critical issue with the `filament-modules` package when using Laravel Modules with a custom `app_folder` configuration.
 
-## About Laravel
+## description
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+When setting `'app_folder' => '/'` in `config/modules.php`, the entire `filament-modules` library breaks completely. This repository serves as a demonstration project to reproduce and showcase this issue for reporting purposes.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## project
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+This is a minimal Laravel project that has been configured to reproduce the issue:
 
-## Learning Laravel
+### dependencies
+- **Laravel Sail** - For Docker-based development environment compatibility
+- **Laravel Modules** - Modular architecture package
+- **Filament** - Admin panel framework
+- **Filament-Modules** - Filament integration for Laravel Modules
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### configuration
+- Modified `config/modules.php` with `'app_folder' => '/'` setting
+- This configuration removes the `app/` prefix from module paths, causing the issue
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### demo module
+- **MyModule** - Contains two simple models created with VibeCoding:
+  - `Post` - Blog post model with relationships
+  - `Category` - Category model for organizing posts
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## start
 
-## Laravel Sponsors
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd example-app
+   ```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+2. **Start Laravel Sail**
+   ```bash
+   sail up -d
+   ```
 
-### Premium Partners
+3. **Install dependencies**
+   ```bash
+   sail composer install
+   ```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+4. **Run migrations**
+   ```bash
+   sail artisan migrate
+   ```
 
-## Contributing
+5. **Access the application**
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## reproduction
 
-## Code of Conduct
+The issue manifests when:
+1. `config/modules.php` has `'app_folder' => '/'`
+2. Filament-Modules tries to resolve module paths
+3. Path resolution fails due to missing `app/` prefix
+4. Admin panel becomes inaccessible
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## details
 
-## Security Vulnerabilities
+- **Laravel Version**: 12.x
+- **PHP Version**: 8.2+
+- **Database**: MySQL 8.0 (via Docker)
+- **Module System**: Laravel Modules v12
+- **Admin Panel**: Filament v4
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## purpose
 
-## License
+This repository serves as:
+- **Issue Reproduction**: Demonstrates the exact problem
+- **Testing Environment**: Allows developers to test fixes
+- **Documentation**: Provides clear steps to reproduce the issue
+- **Collaboration**: Enables community members to contribute solutions
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## notes
+
+- This is intentionally a minimal setup to isolate the issue
+- The models are basic examples created with VibeCoding for demonstration
+- All paths and configurations are set to trigger the filament-modules failure
+- Use this repository to report issues or test potential fixes
